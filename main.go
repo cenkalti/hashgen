@@ -35,7 +35,12 @@ func main() {
 	}
 	var r remux.Remux
 	r.HandleFunc("/(?P<secret>.+)/md5/(?P<target>.+)", handleMD5).Get()
+	r.HandleFunc("/", handleIndex).Get()
 	http.ListenAndServe(":"+port, r)
+}
+
+func handleIndex(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("https://github.com/cenkalti/hashgen"))
 }
 
 func handleMD5(w http.ResponseWriter, r *http.Request) {
