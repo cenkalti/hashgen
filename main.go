@@ -22,17 +22,27 @@ var client = &http.Client{
 	Transport: transport,
 }
 
+var secret string
+
 func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
 		log.Fatal("$PORT must be set")
 	}
+	secret = os.Getenv("SECRET")
+	if secret == "" {
+		log.Fatal("$SECRET must be set")
+	}
 	var r remux.Remux
-	r.HandleFunc("/md5/(?P<target>.+)", handleMD5).Get()
+	r.HandleFunc("/(?P<secret>.+)/md5/(?P<target>.+)", handleMD5).Get()
 	http.ListenAndServe(":"+port, r)
 }
 
 func handleMD5(w http.ResponseWriter, r *http.Request) {
+	if r.FormValue(":secret") != secret {
+		http.Error(w, "invalid secret", http.StatusUnauthorized)
+		return
+	}
 	target := r.FormValue(":target")
 	log.Println(target)
 	resp, err := client.Get(target)
