@@ -1,0 +1,13 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "ugMm7MBSrCd4gJlzR2joCcx+6R8=",
+			"path": "github.com/cenkalti/remux",
+			"revision": "324b49612b25d0d076b732fcdbe823293bdf5c2e",
+			"revisionTime": "2015-03-12T14:31:59Z"
+		}
+	],
+	"rootPath": "github.com/cenkalti/hashgen"
+}
